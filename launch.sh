@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Install preriquisites
+# =====================
+wget -O - https://github.com/dappnode/DAppNode/releases/download/v0.1.18/dappnode_install_pre.sh | bash
+
 # Auto-configure the server
 # =========================
 
