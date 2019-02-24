@@ -3,3 +3,6 @@ chat/
 shortener/
 faucet/
 test/node_modules/
+
+# !!! There will be private keys in the .env file
+.env
