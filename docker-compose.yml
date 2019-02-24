@@ -23,8 +23,8 @@ services:
     build: "faucet"
     restart: always
     environment:
-      WEB3_PROVIDER: "http://kovan"
-      PRIVATE_KEY: "ef4b9e1ffc5f1c880ac..."
+      WEB3_PROVIDER: ""
+      PRIVATE_KEY: "144a10dfcce26b149372b2d978e61278dbe4dbfa1b7c4ab7ecf00aa16ccacf3a"
   # Reverse proxy redirecting to the services
   proxy:
     build: "proxy"

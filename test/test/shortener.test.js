@@ -1,14 +1,15 @@
 const axios = require("axios");
 const expect = require("chai").expect;
 
-const url = "http://localhost/shortener/";
+const baseUrl = process.env.BASE_URL || "http://localhost";
+const url = `${baseUrl}/shortener/`;
 
 describe("Shortener service test", () => {
   describe("Default index page", () => {
     it("should return a default html", async () => {
       const res = await axios.get(url);
       expect(res.status).to.equal(200, "status in not ok");
-      expect(res.data).to.include("Swarm City short url service");
+      expect(res.data).to.include("Swarm City shortener service");
     });
   });
 

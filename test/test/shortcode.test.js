@@ -1,7 +1,8 @@
 const axios = require("axios");
 const expect = require("chai").expect;
 
-const url = "http://localhost/shortcode/";
+const baseUrl = process.env.BASE_URL || "http://localhost";
+const url = `${baseUrl}/shortcode/`;
 
 describe("Shortcode service test", () => {
   describe("Default index page", () => {

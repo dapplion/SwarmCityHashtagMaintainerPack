@@ -1,6 +1,3 @@
-const axios = require("axios");
-const io = require("socket.io-client");
-const WebSocketClient = require("websocket").client;
 const crypto = require("crypto");
 const expect = require("chai").expect;
 
@@ -11,8 +8,10 @@ const expect = require("chai").expect;
  * - Then, the sender will emit a message
  */
 
-const url = "http://localhost/chat/";
+const baseUrl = process.env.BASE_URL || "http://localhost";
+const url = `${baseUrl}`; // Don't use any location. WS requests can be made directly to host's root
 
+// Default options taken from an article about testing socket.io (+ they make the test 4x faster)
 const options = {
   transports: ["websocket"],
   forceNew: true,
@@ -30,29 +29,17 @@ const itemHash = randomHexString(32);
 let sender, receiver;
 
 describe("Chat service test", () => {
-  describe("Default index page", () => {
-    it("should return a default html", async () => {
-      const res = await axios.get(url);
-      expect(res.status).to.equal(200, "status in not ok");
-      expect(res.data).to.include("Swarm City chat service");
-    });
-  });
-
   describe("Websocket chat", () => {
-    beforeEach(function(done) {
+    beforeEach(() => {
       // connect two io clients
-      sender = io(url, options);
-      receiver = io(url, options);
-
-      // finish beforeEach setup
-      done();
+      sender = require("socket.io-client")(url, options);
+      receiver = require("socket.io-client")(url, options);
     });
 
-    afterEach(function(done) {
+    afterEach(() => {
       // disconnect io clients after each test
       sender.disconnect();
       receiver.disconnect();
-      done();
     });
 
     it("should send and receive a message", function(done) {
