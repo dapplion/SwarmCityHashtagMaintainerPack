@@ -1,0 +1,32 @@
+version: "3.4"
+
+volumes:
+  shortener_data: {}
+  chat_data: {}
+
+services:
+  # Independent microservices (all expose port 3000)
+  shortcode:
+    build: "shortcode"
+    restart: always
+  chat:
+    build: "chat"
+    restart: always
+    volumes:
+      - "chat_data:/usr/src/app/db"
+  shortener:
+    build: "shortener"
+    restart: always
+    volumes:
+      - "shortener_data:/usr/src/app/db"
+  faucet:
+    build: "faucet"
+    restart: always
+    environment:
+      WEB3_PROVIDER: "http://kovan"
+      PRIVATE_KEY: "ef4b9e1ffc5f1c880ac..."
+  # Reverse proxy redirecting to the services
+  proxy:
+    build: "proxy"
+    ports:
+     - "80:80"
