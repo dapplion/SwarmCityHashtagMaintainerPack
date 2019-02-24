@@ -2,7 +2,7 @@
   "name": "test",
   "version": "1.0.0",
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha --exit --timeout 5000"
   },
   "main": "index.js",
   "license": "MIT",
