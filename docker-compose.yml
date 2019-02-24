@@ -7,26 +7,31 @@ volumes:
 services:
   # Independent microservices (all expose port 3000)
   shortcode:
-    build: "shortcode"
+    build: shortcode
+    container_name: shortcode
     restart: always
   chat:
-    build: "chat"
+    build: chat
+    container_name: chat
     restart: always
     volumes:
-      - "chat_data:/usr/src/app/db"
+      - chat_data:/usr/src/app/db
   shortener:
-    build: "shortener"
+    build: shortener
+    container_name: shortener
     restart: always
     volumes:
-      - "shortener_data:/usr/src/app/db"
+      - shortener_data:/usr/src/app/db
   faucet:
-    build: "faucet"
+    build: faucet
+    container_name: faucet
     restart: always
     environment:
-      PRIVATE_KEY: "${PRIVATE_KEY}"
-      WEB3_PROVIDER: "${WEB3_PROVIDER}"
+      PRIVATE_KEY: $PRIVATE_KEY
+      WEB3_PROVIDER: $WEB3_PROVIDER
   # Reverse proxy redirecting to the services
   proxy:
-    build: "proxy"
+    build: proxy
+    container_name: proxy
     ports:
      - "80:80"
